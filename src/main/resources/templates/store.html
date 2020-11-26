@@ -1,14 +1,31 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>New Person</title>
+    <title>Store</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
 
+<header th:insert="blocks/storeHeader :: header"></header>
+
 <div>
-    <p>>You User!!!!!!</p>
-    <p th:text="${user.getEmail()}"/>
+    <p>You User!!!!!!</p>
+<!--    <p th:text="${user.getEmail()}"/>-->
+
+    <div th:each="product : ${products}">
+        <p th:text="${product.getId()}"/>
+        <p th:text="${product.getProducer()}"/>
+        <p th:text="${product.getCategory()}"/>
+        <p th:text="${product.getModel()}"/>
+        <p th:text="${product.getPrice()}"/>
+        <p th:text="${product.getDescription()}"/>
+        <form th:action="'/store/' + ${product.getId()} + '/putInBasket'">
+            <button type="submit">Put in the basket</button>
+        </form>
+    </div>
+
 </div>
 
 </body>

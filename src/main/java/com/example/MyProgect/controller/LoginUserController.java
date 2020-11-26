@@ -41,8 +41,10 @@ public class LoginUserController {
 //        }
 
         System.out.println(userFromDb.toString());
-//        model.addAttribute("user", userFromDb);
+        model.addAttribute("user", userFromDb);
+
 //        return "redirect:/adminCabinet";
-        return "/adminCabinet";
+//        return "/adminCabinet";
+        return "redirect:/store";
     }
 }
