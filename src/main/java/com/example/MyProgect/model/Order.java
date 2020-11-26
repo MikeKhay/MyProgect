@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,10 +19,16 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Timestamp data;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date data;
     private Double totalPrice;
     private String orderCity;
     private String orderAddress;
+
+    @PrePersist
+    private void onCreate(){
+        data = new Date();
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bucket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<header th:insert="blocks/storeHeader :: header"></header>
+
+<div>
+    <p>Bucket store</p>
+    <p>You User!!!!!!</p>
+
+
+<!--    <h4>to buy</h4>-->
+        <form action="/order" method="post">
+            <input type="number" name="numberTel" placeholder="Number Telephone">
+            <input type="text" name="lastName" placeholder="Last name">
+            <input type="text" name="firstName" placeholder="First name">
+            <input type="text" name="city" placeholder="You city">
+            <input type="text" name="address" placeholder="You address">
+            <button type="submit">To buy</button>
+        </form>
+
+
+    <h4>Total Prise : </h4>
+        <h4 th:text="${totalPrise}"/>
+            <div th:each="product : ${productOutBucket}">
+                <p th:text="${product.getId()}"/>
+                <p th:text="${product.getProducer()}"/>
+                <p th:text="${product.getCategory()}"/>
+                <p th:text="${product.getModel()}"/>
+                <p th:text="${product.getPrice()}"/>
+                <p th:text="${product.getDescription()}"/>
+                    <form th:action="'/bucket/' + ${product.getId()} + '/deleteInBucket'">
+                        <button type="submit">Delete out basket</button>
+                    </form>
+            </div>
+
+</div>
+
+</body>
+</html>

@@ -23,12 +23,4 @@ public class StoreController {
 
         return "store";
     }
-
-    @GetMapping("/store/{id}/putInBasket")
-    public String productInBucket(@PathVariable("id") Long id){
-        Product product = productRepository.findById(id).orElseThrow();
-
-        System.out.println(product.toString());
-        return "redirect:/store";
-    }
 }
