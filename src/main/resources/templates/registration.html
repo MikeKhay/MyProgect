@@ -1,21 +1,24 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Registration Person</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Spring Security Example </title>
 </head>
 <body>
-
-<div>
-    <h3>Registration Person</h3>
-    <form action="/registration" method="post">
-        <input type="text" name="email" placeholder="email">
-        <input type="text" name="password" placeholder="password">
-
-        <button type="submit">Create Person</button>
-    </form>
-    <div th:text="${message}"/>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
 </div>
 
+
+<h3>Registration new user</h3>
+<form th:action="@{/registration}" method="post">
+    <div><label> Email   : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+<div th:text="${message}"/>
 </body>
 </html>

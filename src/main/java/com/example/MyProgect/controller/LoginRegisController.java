@@ -8,39 +8,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 
 @Controller
-public class RegistrationUserController {
-
+public class LoginRegisController {
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/registration")
-    public String loginUser(Model model){
+    public String registration(){
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String postLoginUser(@RequestParam String email,
-                                @RequestParam String password,
-                                Model model){
+    public String addUser(User user, Model model){
 
-        User userFromDb = userRepository.findByEmail(email);
-        if(userFromDb != null){
-            model.addAttribute("message", "User EXISTS!!!!");
+        User byEmail = userRepository.findByUsername(user.getUsername());
+
+        if (byEmail != null){
+            model.addAttribute("message", "User Exist!!!");
             return "registration";
         }
 
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setRoles(Role.USER);
-        System.out.println(user.toString());
-
+        user.setActive(true);
+        user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
+
         return "redirect:/login";
     }
 }
