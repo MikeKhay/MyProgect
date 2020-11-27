@@ -24,24 +24,15 @@ public class LoginUserController {
     public String loginPostUser(@RequestParam String email,
                                 @RequestParam String password,
                                 Model model) {
-        User userFromDb = userRepository.findByEmailAndPassword(email, password);
+        User user = userRepository.findByEmailAndPassword(email, password);
 
-        if (userFromDb == null){
+        if (user == null){
             model.addAttribute("message","The user is not registered or enter the correct login and password.");
             return "login";
         }
 
-//        System.out.println(userFromDb.getRoles());
-//
-//        String[] s = {"ADMIN"};
-//        if (userFromDb.getRoles().equals(s))
-//        {
-//            System.out.println("Заходить в перевірку на узера");
-//            return "cabinetAdmin";
-//        }
-
-        System.out.println(userFromDb.toString());
-        model.addAttribute("user", userFromDb);
+        System.out.println(user.toString());
+        model.addAttribute("user", user);
 
 //        return "redirect:/adminCabinet";
 //        return "/adminCabinet";

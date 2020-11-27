@@ -37,7 +37,7 @@ public class RegistrationUserController {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Role.USER);
         System.out.println(user.toString());
 
         userRepository.save(user);

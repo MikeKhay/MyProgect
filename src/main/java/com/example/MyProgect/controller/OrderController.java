@@ -1,6 +1,5 @@
 package com.example.MyProgect.controller;
 
-import com.example.MyProgect.Dao.ProductDao;
 import com.example.MyProgect.model.Order;
 import com.example.MyProgect.model.Product;
 import com.example.MyProgect.model.User;
@@ -9,9 +8,11 @@ import com.example.MyProgect.repository.ProductRepository;
 import com.example.MyProgect.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,8 +28,12 @@ public class OrderController {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private ProductDao productDao;
+    @GetMapping("/order")
+    public String getOrdet(Principal principal){
+
+
+        return "bucket";
+    }
 
     @PostMapping("/order")
     public String order(@RequestParam Long numberTel,
@@ -46,16 +51,7 @@ public class OrderController {
 
         Order order = new Order();
         order.setUser(user);
-        order.setTotalPrice(productDao.totalPriseBucket());
-        order.setOrderCity(city);
-        order.setOrderAddress(address);
 
-        List<Product> getOutBucket = productDao.getOutBucket();
-
-        for (Product p: getOutBucket) {
-            Product pr = productRepository.findById(p.getId()).orElseThrow();
-            order.setProducts(Arrays.asList(pr));
-        }
 
         orderRepository.save(order);
 

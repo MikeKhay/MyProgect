@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -17,9 +18,12 @@ public class StoreController {
     private ProductRepository productRepository;
 
     @GetMapping("/store")
-    public String store(Model model){
-        Iterable<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
+    public String store(Principal principal){
+
+        System.out.println(principal);
+
+//        Iterable<Product> products = productRepository.findAll();
+//        model.addAttribute("products", products);
 
         return "store";
     }
