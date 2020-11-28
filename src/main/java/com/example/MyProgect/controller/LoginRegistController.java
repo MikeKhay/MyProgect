@@ -29,6 +29,10 @@ public class LoginRegistController {
             model.addAttribute("message", "Such user is not registered. Or entered incorrect information.");
             return "login";
         }
+        if(userDb.getRole().equals(Role.ADMIN)){
+            log.info("Admin login " + user.toString());
+            return "redirect:/adminCabinet";
+        }
         log.info("User login " + user.toString());
         return "redirect:/store";
     }
@@ -53,7 +57,6 @@ public class LoginRegistController {
         log.info("New User save " + user.toString());
         user.setRole(Role.USER);
         userRepository.save(user);
-
         return "redirect:/login";
     }
 

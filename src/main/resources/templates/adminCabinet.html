@@ -12,7 +12,33 @@
 
 <div>
     <p>Cabinet Admin</p>
-<!--    <p th:text="${user.getEmail()}"/>-->
+</div>
+<div>
+    <h4>Add product</h4>
+    <form action="/adminCabinet/addProduct" method="post">
+        <input type="text" name="category" placeholder="Product Category">
+        <input type="text" name="producer" placeholder="Product Producer">
+        <input type="text" name="model" placeholder="Product Model">
+        <input type="number" name="price" placeholder="Product Price">
+        <input type="text" name="description" placeholder="Product Description">
+        <button type="submit">Create Product</button>
+    </form>
+</div>
+
+
+<h4>All product</h4>
+<div th:each="product : ${products}">
+    <form th:action="'/adminCabinet/' + ${product.getId()} + '/updatePrDataBase'" method="post">
+        <input type="text" name="category" th:value="${product.getCategory()}" placeholder="Product Category">
+        <input type="text" name="producer" th:value="${product.getProducer()}" placeholder="Product Producer">
+        <input type="text" name="model" th:value="${product.getModel()}" placeholder="Product Model">
+        <input type="number" name="price" th:value="${product.getPrice()}" placeholder="Product Price">
+        <input type="text" name="description" th:value="${product.getDescription()}" placeholder="Product Description">
+        <button type="submit">Update</button>
+    </form>
+    <form th:action="'/adminCabinet/' + ${product.getId()} + '/deletePrDataBase'" method="post">
+        <button type="submit">Delete</button>
+    </form>
 </div>
 
 </body>
