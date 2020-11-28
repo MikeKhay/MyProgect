@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Internet store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<header th:insert="block/header :: header"></header>
+    <div>
+        <h4>Add product{ НЕ МОЖУ ДОБАВИТИ НОВИЙ ПРОДУКТ 403 помилка}</h4>
+            <form action="/adminCabinet" method="post">
+                <input type="text" name="category" placeholder="Product Category">
+                <input type="text" name="producer" placeholder="Product Producer">
+                <input type="text" name="model" placeholder="Product Model">
+                <input type="number" name="price" placeholder="Product Price">
+                <input type="text" name="description" placeholder="Product Description">
+                <button type="submit">Create Product</button>
+            </form>
+    </div>
+
+<!--<div>-->
+<!--    <h4>Control User</h4>-->
+
+<!--    <div th:each="users : ${users}">-->
+<!--        <form th:action="'/adminCabinet/' + ${users.getId()} + '/updateUsDataBase'" method="post">-->
+<!--            <input type="text" name="username" th:value="${users.getUsername}" placeholder="User email">-->
+<!--            <input type="text" name="city" th:value="${users.getCity()}" placeholder="User city">-->
+<!--            <input type="text" name="address" th:value="${users.getAddress()}" placeholder="User address">-->
+<!--            <input type="text" name="active" th:value="${users.getActive()}" placeholder="User actibe">-->
+<!--            <input type="text" name="role" th:value="${users.getRoles()}" placeholder="User role">-->
+<!--            <button type="submit">Update</button>-->
+<!--        </form>-->
+<!--        <form th:action="'/adminCabinet/' + ${product.getId()} + '/deletePrDataBase'" method="post">-->
+<!--            <button type="submit">Delete</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--</div>-->
+
+    <div>
+        <h4>Control Product</h4>
+
+        <div th:each="product : ${products}">
+            <form th:action="'/adminCabinet/' + ${product.getId()} + '/updatePrDataBase'" method="post">
+                <input type="text" name="category" th:value="${product.getCategory()}" placeholder="Product Category">
+                <input type="text" name="producer" th:value="${product.getProducer()}" placeholder="Product Producer">
+                <input type="text" name="model" th:value="${product.getModel()}" placeholder="Product Model">
+                <input type="number" name="price" th:value="${product.getPrice()}" placeholder="Product Price">
+                <input th:text="${product.getId()}" type="text" name="description" th:value="${product.getDescription()}" placeholder="Product Description">
+                <button type="submit">Update</button>
+            </form>
+            <form th:action="'/adminCabinet/' + ${product.getId()} + '/deletePrDataBase'" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

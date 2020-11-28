@@ -19,14 +19,28 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "email", unique = true)
     private String username;
+    @Column(unique = true)
     private String password;
     private boolean active;
+    private String lastName;
+    private String firstName;
+    @Column(unique = true)
+    private Long numberTel;
+    private String city;
+    private String address;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Order> orders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Bucket> buckets;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
