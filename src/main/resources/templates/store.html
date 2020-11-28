@@ -13,9 +13,8 @@
 <div>
     <p>Priority store Internet Magazine</p>>
     <p>You User!!!!!!</p>
-    <p th:text="${user.getEmail()}"/>
 
-    <div th:each="product : ${products}">
+    <form th:each="product : ${products}">
         <p th:text="${product.getId()}"/>
         <p th:text="${product.getProducer()}"/>
         <p th:text="${product.getCategory()}"/>
@@ -25,7 +24,7 @@
         <form th:action="'/store/' + ${product.getId()} + '/putInBasket'">
             <button type="submit">Put in the basket</button>
         </form>
-    </div>
+    </form>
 
 </div>
 

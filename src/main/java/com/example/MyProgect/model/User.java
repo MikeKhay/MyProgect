@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -28,7 +27,7 @@ public class User {
     private String city;
     private String address;
     @Enumerated(EnumType.STRING)
-    private Role roles;
+    private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Order> orders;
