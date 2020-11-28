@@ -27,8 +27,9 @@ public class AdminCabinetController {
     @GetMapping("/adminCabinet")
     public String adminCabinet(Model model){
 
-        List<User> users = userRepository.findAll();
-        model.addAttribute("users", users);
+//        List<User> users = userRepository.findAll();
+//        users.forEach(System.out::println);
+//        model.addAttribute("users", users);
 
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);

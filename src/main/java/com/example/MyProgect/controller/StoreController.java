@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class StoreController {
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -23,16 +27,13 @@ public class StoreController {
     public String store(Principal principal, Model model){
 
         String name = principal.getName();
-
-        User user = userRepository.findByUsername(principal.getName());
-
-        System.out.println(user.toString());
-
         if (name == null){
             name = "User";
         }
-
         model.addAttribute("name", name);
+
+        List<Product> products = productRepository.findAll();
+        model.addAttribute("products", products);
 
         return "store";
     }
