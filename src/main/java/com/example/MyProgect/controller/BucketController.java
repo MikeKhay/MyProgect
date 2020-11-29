@@ -34,10 +34,17 @@ public class BucketController {
     public String bucketUser(Principal principal, Model model){
         User user = userRepository.findByUsername(principal.getName());
         model.addAttribute("product", user.getProducts());
+
+        List<Product> products = user.getProducts();
+        double totalPrice = 0;
+        for (Product p: products) {
+            totalPrice += p.getPrice();
+        }
+        model.addAttribute("totalPrice", totalPrice);
         return "bucket";
     }
 
-    @PostMapping("/bucket/{id}/putInBucket")
+    @GetMapping("/bucket/{id}/putInBucket")
     public String postPutInBucket(@PathVariable(name = "id") Long id, Principal principal){
         Product product = productRepository.findById(id).orElseThrow();
         System.out.println(product);
@@ -61,19 +68,27 @@ public class BucketController {
     @PostMapping("/bucket/buy")
     public String postToBuy(Principal principal){
         User user = userRepository.findByUsername(principal.getName());
-        Order order = new Order();
-        order.setUser(user);
-        List<Product> products = user.getProducts();
-        double totalPrice = 0;
-        for (Product p: products) {
-            totalPrice += p.getPrice();
+        if (user.getProducts()==null){
+            return "store";
         }
-        order.setProducts(products);
-        order.setTotalPrice(totalPrice);
-        orderRepository.save(order);
-
+        else {
+            Order order = new Order();
+            List<Product> products = user.getProducts();
+            double totalPrice = 0;
+            for (Product p : products) {
+                totalPrice += p.getPrice();
+                Product product = productRepository.findById(p.getId()).orElseThrow();
+                order.getProducts().add(product);
+            }
+            order.setTotalPrice(totalPrice);
+            order.setUser(user);
+            orderRepository.save(order);
+            user.getProducts().clear();
+            userRepository.save(user);
+        }
         return "store";
     }
+
 
 
 }

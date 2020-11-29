@@ -11,9 +11,7 @@
 
 <header th:insert="block/header :: header"></header>
 
-<h3>Heloo :</h3>
-<h3 th:text="${name}"/>
-
+<h4>Update information user</h4>
 <div>
     <div th:each="product : ${products}">
         <p th:text="${product.getId()}"/>
@@ -22,11 +20,10 @@
         <p th:text="${product.getModel()}"/>
         <p th:text="${product.getPrice()}"/>
         <p th:text="${product.getDescription()}"/>
-        <form th:action="'/bucket/' + ${product.getId()} + '/putInBucket'" method="post">
+        <form th:action="'/bucket/' + ${product.getId()} + '/putInBucket'" method="get">
             <button type="submit">Put in the basket</button>
         </form>
     </div>
-
 </div>
 
 </body>

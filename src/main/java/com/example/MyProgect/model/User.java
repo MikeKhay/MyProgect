@@ -84,4 +84,32 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public Long getNumberTel() {
+        return numberTel;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 }

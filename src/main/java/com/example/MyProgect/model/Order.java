@@ -37,5 +37,11 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Product> products = new ArrayList<>();
 
+    public Order(Double totalPrice, User user, List<Product> products) {
+        this.totalPrice = totalPrice;
+        this.user = user;
+        this.products = products;
+    }
+
 
 }
