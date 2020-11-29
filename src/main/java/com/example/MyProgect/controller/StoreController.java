@@ -24,13 +24,7 @@ public class StoreController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String store(Principal principal, Model model){
-
-        String name = principal.getName();
-        if (name == null){
-            name = "User";
-        }
-        model.addAttribute("name", name);
+    public String store(Model model){
 
         List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);

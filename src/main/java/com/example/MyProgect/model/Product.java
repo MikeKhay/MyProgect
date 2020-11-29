@@ -25,8 +25,12 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Order> orders = new ArrayList<>();
 
+//    @ManyToOne
+//    @JoinColumn(name="bucket_id")
+//    private Bucket bucket;
+
     @ManyToMany(mappedBy = "products")
-    private List<Bucket> bucket = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     public Product(String category, String producer, String model, Double price, String description) {
         this.category = category;

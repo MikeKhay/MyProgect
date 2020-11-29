@@ -1,19 +1,21 @@
 package com.example.MyProgect.controller;
 
-import com.example.MyProgect.model.Bucket;
+import com.example.MyProgect.model.Order;
 import com.example.MyProgect.model.Product;
 import com.example.MyProgect.model.User;
-import com.example.MyProgect.repository.BucketRepository;
+import com.example.MyProgect.repository.OrderRepository;
 import com.example.MyProgect.repository.ProductRepository;
 import com.example.MyProgect.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.Arrays;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -23,27 +25,55 @@ public class BucketController {
     private UserRepository userRepository;
 
     @Autowired
-    private BucketRepository bucketRepository;
-
-    @Autowired
     private ProductRepository productRepository;
 
-    @PostMapping("/store/{id}/putInBucket")
-    public String postPutInBucket(@PathVariable(name = "id") Long id, Principal principal){
+    @Autowired
+    private OrderRepository orderRepository;
 
+    @GetMapping("/bucket")
+    public String bucketUser(Principal principal, Model model){
         User user = userRepository.findByUsername(principal.getName());
-        log.info(user.toString());
+        model.addAttribute("product", user.getProducts());
+        return "bucket";
+    }
 
+    @PostMapping("/bucket/{id}/putInBucket")
+    public String postPutInBucket(@PathVariable(name = "id") Long id, Principal principal){
         Product product = productRepository.findById(id).orElseThrow();
-        log.info(product.toString());
+        System.out.println(product);
+        User user = userRepository.findByUsername(principal.getName());
+        user.getProducts().add(product);
+        userRepository.save(user);
+        System.out.println(user);
+        return "store";
+    }
 
-        Bucket bucket = new Bucket();
-        bucket.setUser(user);
-        bucket.setProducts(Arrays.asList(product));
-        System.out.println(bucket.toString());
+    @PostMapping("/bucket/{id}/deleteInBucket")
+    public String postDeleteInBucket(@PathVariable(name = "id") Long id, Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        List<Product> products = user.getProducts();
+        products.removeIf(product -> product.getId() == id);
+        user.setProducts(products);
+        userRepository.save(user);
+        return "redirect:/bucket";
+    }
 
-        bucketRepository.save(bucket);
+    @PostMapping("/bucket/buy")
+    public String postToBuy(Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        Order order = new Order();
+        order.setUser(user);
+        List<Product> products = user.getProducts();
+        double totalPrice = 0;
+        for (Product p: products) {
+            totalPrice += p.getPrice();
+        }
+        order.setProducts(products);
+        order.setTotalPrice(totalPrice);
+        orderRepository.save(order);
 
         return "store";
     }
+
+
 }
