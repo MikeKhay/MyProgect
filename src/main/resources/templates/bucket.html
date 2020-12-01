@@ -25,11 +25,19 @@
         </form>
     </div>
 </div>
-<h5>Total Price</h5>
-<h5 th:text="${totalPrice}"></h5>
-<form action="/bucket/buy" method="post">
+
+
+<form th:action="'/bucket/buy'" method="post">
+    <p th:text="${user.getFirstName()}"/>
+    <p th:text="${user.getLastName()}"/>
+    <input type="text" name="city" th:value="${user.getCity()}" placeholder="User city">
+    <input type="text" name="address" th:value="${user.getAddress()}" placeholder="User address">
+    <input type="number" name="numberTel" th:value="${user.getNumberTel()}" placeholder="User number telephone">
+    <h5>Total Price</h5>
+    <h5 th:text="${totalPrice}"></h5>
     <button type="submit">To buy</button>
 </form>
+
 
 
 </body>

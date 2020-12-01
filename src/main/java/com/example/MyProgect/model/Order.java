@@ -21,6 +21,9 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date data;
     private Double totalPrice;
+    private String city;
+    private String address;
+    private Long numberTel;
 
     @PrePersist
     private void onCreate(){
@@ -43,5 +46,35 @@ public class Order {
         this.products = products;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public Date getData() {
+        return data;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Long getNumberTel() {
+        return numberTel;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
 }

@@ -24,11 +24,13 @@
             </form>
         </div>
 
-    <h4>Write orders user</h4>
+    <h4>Print orders user</h4>
     <div th:each="orders : ${orders}">
         <p th:text="${orders.getId()}"/>
         <p th:text="${orders.getData()}"/>
-<!--        <p th:text="${orders.getProduct()}"/>-->
+        <p th:text="${orders.getCity()}"/>
+        <p th:text="${orders.getAddress()}"/>
+        <p th:text="${orders.getNumberTel()}"/>
             <div th:each="p : ${orders.getProducts()}">
                 <p th:text="${p}"/>
             </div>
@@ -36,19 +38,6 @@
         <hr>
     </div>
 
-<!--<div>-->
-<!--    <div th:each="product : ${products}">-->
-<!--        <p th:text="${product.getId()}"/>-->
-<!--        <p th:text="${product.getProducer()}"/>-->
-<!--        <p th:text="${product.getCategory()}"/>-->
-<!--        <p th:text="${product.getModel()}"/>-->
-<!--        <p th:text="${product.getPrice()}"/>-->
-<!--        <p th:text="${product.getDescription()}"/>-->
-<!--        <form th:action="'/bucket/' + ${product.getId()} + '/putInBucket'" method="get">-->
-<!--            <button type="submit">Put in the basket</button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
 
 </body>
 </html>

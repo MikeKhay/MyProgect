@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -34,7 +35,7 @@ public class BucketController {
     public String bucketUser(Principal principal, Model model){
         User user = userRepository.findByUsername(principal.getName());
         model.addAttribute("product", user.getProducts());
-
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         List<Product> products = user.getProducts();
         double totalPrice = 0;
         for (Product p: products) {
@@ -66,7 +67,10 @@ public class BucketController {
     }
 
     @PostMapping("/bucket/buy")
-    public String postToBuy(Principal principal){
+    public String postToBuy(@RequestParam String city,
+                            @RequestParam String address,
+                            @RequestParam Long numberTel,
+                            Principal principal){
         User user = userRepository.findByUsername(principal.getName());
         if (user.getProducts()==null){
             return "store";
@@ -80,6 +84,9 @@ public class BucketController {
                 Product product = productRepository.findById(p.getId()).orElseThrow();
                 order.getProducts().add(product);
             }
+            order.setCity(city);
+            order.setAddress(address);
+            order.setNumberTel(numberTel);
             order.setTotalPrice(totalPrice);
             order.setUser(user);
             orderRepository.save(order);

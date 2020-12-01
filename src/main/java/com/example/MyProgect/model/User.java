@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
@@ -80,36 +80,12 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", active=" + active +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", numberTel=" + numberTel +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
                 '}';
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public Long getNumberTel() {
-        return numberTel;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
     }
 }
