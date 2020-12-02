@@ -6,7 +6,7 @@ import com.example.MyProgect.model.User;
 import com.example.MyProgect.repository.OrderRepository;
 import com.example.MyProgect.repository.ProductRepository;
 import com.example.MyProgect.repository.UserRepository;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.util.List;
 
-@Log4j2
+@Log4j
 @Controller
 public class BucketController {
 
@@ -52,7 +52,7 @@ public class BucketController {
         User user = userRepository.findByUsername(principal.getName());
         user.getProducts().add(product);
         userRepository.save(user);
-        System.out.println(user);
+        log.info("Add product in bucket : " + product.getId() + " in person : " + user.getId());
         return "store";
     }
 
@@ -62,6 +62,7 @@ public class BucketController {
         List<Product> products = user.getProducts();
         products.removeIf(product -> product.getId() == id);
         user.setProducts(products);
+        log.info("Removing the product from the cart by the user : " + user.getId());
         userRepository.save(user);
         return "redirect:/bucket";
     }
@@ -91,6 +92,7 @@ public class BucketController {
             order.setUser(user);
             orderRepository.save(order);
             user.getProducts().clear();
+            log.info("Add new order : " + order.getId());
             userRepository.save(user);
         }
         return "store";

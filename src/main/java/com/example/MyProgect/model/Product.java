@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +17,21 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
     private String category;
+    @NotNull
     private String producer;
+    @NotNull
     private String model;
+    @NotNull
     private Double price;
+    @NotNull
     private String description;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.DETACH)
     private List<Order> orders = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name="bucket_id")
-//    private Bucket bucket;
-
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.DETACH)
     private List<User> users = new ArrayList<>();
 
     public Product(String category, String producer, String model, Double price, String description) {

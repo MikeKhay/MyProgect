@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Internet store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<header th:insert="block/header :: header"></header>
+
+<form action="/adminCabinet/adminUser">
+    <button type="submit">User Control</button>
+</form>
+
+<form action="/adminCabinet/adminOrder">
+    <button type="submit">Order Control</button>
+</form>
+
+<form action="/adminCabinet/adminProduct">
+    <button type="submit">Product Control</button>
+</form>
+<div>
+    <h4>Control Orders</h4>
+
+    <div th:each="orders : ${orders}">
+        <form th:action="'/adminCabinet/' + ${orders.getId()} + '/updateOrderDataBase'" method="post">
+            <p th:text="${orders.getId()}"/>
+            <p th:text="${orders.getData()}"/>
+            <p th:text="${orders.getTotalPrice()}"/>
+            <p th:text="${orders.getUser()}"/>
+            <input type="text" name="city" th:value="${orders.getCity()}" placeholder="User city">
+            <input type="text" name="address" th:value="${orders.getAddress()}" placeholder="User address">
+            <input type="number" name="numberTel" th:value="${orders.getNumberTel()}" placeholder="User numberTel">
+            <button type="submit">Update information order</button>
+        </form>
+
+        <div th:each="product : ${orders.getProducts()}">
+            <form th:action="'/adminCabinet/' + ${orders.getId()} + '/' + ${product.getId()} + '/updateProductOrderDataBase'" method="post">
+                <p th:text="${product}"/>
+                <button type="submit">Delete product in order</button>
+            </form>
+        </div>
+
+        <form th:action="'/adminCabinet/' + ${orders.getId()} + '/deleteOrderDataBase'" method="post">
+            <button type="submit">Delete order</button>
+        </form>
+        <hr>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Internet store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<header th:insert="block/header :: header"></header>
+
+<form action="/adminCabinet/adminUser">
+    <button type="submit">User Control</button>
+</form>
+
+<form action="/adminCabinet/adminOrder">
+    <button type="submit">Order Control</button>
+</form>
+
+<form action="/adminCabinet/adminProduct">
+    <button type="submit">Product Control</button>
+</form>
+
+<h4>Control Product</h4>
+
+        <form th:action="'/adminCabinet/' + ${product.getId()} + '/updatePrDataBase'" method="post">
+            <input type="text" name="category" th:value="${product.getCategory()}" placeholder="Product Category">
+            <input type="text" name="producer" th:value="${product.getProducer()}" placeholder="Product Producer">
+            <input type="text" name="model" th:value="${product.getModel()}" placeholder="Product Model">
+            <input type="number" name="price" th:value="${product.getPrice()}" placeholder="Product Price">
+            <input type="text" name="description" th:value="${product.getDescription()}" placeholder="Product Description">
+            <button type="submit">Update</button>
+        </form>
+        <form th:action="'/adminCabinet/' + ${product.getId()} + '/updatePrDataBase'" method="post">
+            <button type="submit">Delete</button>
+        </form>
+
+</body>
+</html>

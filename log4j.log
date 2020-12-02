@@ -1,0 +1,47 @@
+INFO  BucketController:56 - Add product in bucket : 7 in person : 1
+INFO  BucketController:66 - Removing the product from the cart by the user : 1
+INFO  AdminCabinetController:124 - Add new product : null
+INFO  AdminCabinetController:124 - Add new product : null
+INFO  AdminCabinetController:124 - Add new product : null
+INFO  BucketController:56 - Add product in bucket : 11 in person : 1
+INFO  BucketController:96 - Add new order : 14
+INFO  UserCabinetController:54 - Update information user : 1
+INFO  BucketController:56 - Add product in bucket : 7 in person : 1
+INFO  BucketController:66 - Removing the product from the cart by the user : 1
+INFO  AdminCabinetController:174 - New role : admin in person : 10
+INFO  AdminCabinetController:174 - New role : user in person : 10
+INFO  AdminCabinetController:152 - Update product : 13
+INFO  BucketController:56 - Add product in bucket : 7 in person : 10
+INFO  BucketController:56 - Add product in bucket : 7 in person : 10
+INFO  BucketController:56 - Add product in bucket : 13 in person : 10
+INFO  BucketController:66 - Removing the product from the cart by the user : 10
+INFO  BucketController:56 - Add product in bucket : 7 in person : 10
+INFO  BucketController:96 - Add new order : 16
+INFO  BucketController:56 - Add product in bucket : 7 in person : 10
+INFO  UserCabinetController:54 - Update information user : 10
+INFO  AdminCabinetController:77 - Update product in order : 9
+INFO  AdminCabinetController:77 - Update product in order : 16
+INFO  AdminCabinetController:152 - Update product : 12
+INFO  AdminCabinetController:152 - Update product : 11
+INFO  AdminCabinetController:174 - New role : admin in person : 10
+INFO  AdminCabinetController:174 - New role : user in person : 10
+INFO  AdminCabinetController:77 - Update product in order : 9
+INFO  AdminCabinetController:181 - New role : admin in person : 10
+INFO  AdminCabinetController:181 - New role : user in person : 10
+INFO  AdminCabinetController:181 - New role : admin in person : 10
+INFO  AdminCabinetController:181 - New role : user in person : 10
+INFO  BucketController:55 - Add product in bucket : 12 in person : 1
+INFO  BucketController:55 - Add product in bucket : 13 in person : 1
+INFO  BucketController:95 - Add new order : 17
+INFO  AdminCabinetController:83 - Update product in order : 17
+INFO  AdminCabinetController:193 - New role : admin in person : 10
+INFO  AdminCabinetController:193 - New role : user in person : 10
+INFO  AdminCabinetController:199 - New role : admin in person : 10
+INFO  AdminCabinetController:199 - New role : user in person : 10
+INFO  AdminCabinetController:170 - Update product : 11
+INFO  AdminCabinetController:136 - Add new product : null
+INFO  AdminCabinetController:150 - Delete product : 13
+INFO  AdminCabinetController:150 - Delete product : 7
+INFO  AdminCabinetController:150 - Delete product : 11
+INFO  AdminCabinetController:150 - Delete product : 18
+INFO  AdminCabinetController:150 - Delete product : 13

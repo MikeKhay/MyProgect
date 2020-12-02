@@ -21,6 +21,16 @@
 <form action="/adminCabinet/adminProduct">
     <button type="submit">Product Control</button>
 </form>
+<div>
+    <h4>Control User</h4>
+    <div th:each="users : ${users}">
+        <form th:action="'/adminCabinet/' + ${users.getId()} + '/updateUsDataBase'" method="post">
+            <input type="text" name="username" th:value="${users.username}" placeholder="User email">
+            <input type="text" name="role" th:text="${users.getRoles()}" placeholder="User role">
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

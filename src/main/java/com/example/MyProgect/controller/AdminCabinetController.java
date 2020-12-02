@@ -7,19 +7,16 @@ import com.example.MyProgect.model.User;
 import com.example.MyProgect.repository.OrderRepository;
 import com.example.MyProgect.repository.ProductRepository;
 import com.example.MyProgect.repository.UserRepository;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-@Log4j2
+@Log4j
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminCabinetController {
@@ -35,15 +32,21 @@ public class AdminCabinetController {
 
     @GetMapping("/adminCabinet")
     public String adminCabinet(Model model){
-        model.addAttribute("users", userRepository.findAll());
-        model.addAttribute("roles", Role.values());
-        model.addAttribute("products", productRepository.findAll());
-        model.addAttribute("orders", orderRepository.findAll());
+//        model.addAttribute("users", userRepository.findAll());
+//        model.addAttribute("roles", Role.values());
+//        model.addAttribute("products", productRepository.findAll());
+//        model.addAttribute("orders", orderRepository.findAll());
         return "adminCabinet";
     }
 
 
     /////////////////////////////////// ORDER CONTROL /////////////////////////////////////////////////////
+    @GetMapping("/adminCabinet/adminOrder")
+    public String getAdminOrderControl(Model model){
+        model.addAttribute("orders", orderRepository.findAll());
+        return "adminOrder";
+    }
+
     @PostMapping("/adminCabinet/{id}/updateOrderDataBase")
     public String postUpdateOrderDataBase(@PathVariable(name = "id") Long id,
                                           @RequestParam String city,
@@ -53,8 +56,9 @@ public class AdminCabinetController {
         order.setCity(city);
         order.setAddress(address);
         order.setNumberTel(numberTel);
+        log.info("Update order : " + order.getId());
         orderRepository.save(order);
-        return "redirect:/adminCabinet";
+        return "adminOrder";
     }
 
     @PostMapping("/adminCabinet/{orderId}/{productId}/updateProductOrderDataBase")
@@ -62,33 +66,60 @@ public class AdminCabinetController {
                                              @PathVariable(name = "productId") Long productId){
         Order order = orderRepository.findById(orderId).orElseThrow();
         List<Product> products = order.getProducts();
+        for (Product product: products) {
+            if(product.getId() == productId){
+                if (products.remove(product)){
+                    break;
+                }
+            }
+        }
         double totalPrice = 0;
         for (Product product: products) {
-            if(product.getId()==productId){
-                products.remove(product);
-                totalPrice += product.getPrice();
-            }
+            totalPrice += product.getPrice();
         }
 
         order.setTotalPrice(totalPrice);
         order.setProducts(products);
+        log.info("Update product in order : " + order.getId());
         orderRepository.save(order);
-        return "redirect:/adminCabinet";
+        return "adminOrder";
     }
 
+
+    //Доробити ордера. повністю не видаляються.
     @PostMapping("/adminCabinet/{id}/deleteOrderDataBase")
     public String deleteOrderDataBase(@PathVariable(name = "id") Long id){
 //        List<Order> orders = orderRepository.findAll();
-//        orders.removeIf(order -> order.getId() == id);
+//        Order order1 = orderRepository.findById(id).orElseThrow();
+//        for (Order order : orders) {
+//            if(order.getId() == id){
+//                order.remove();
+//            }
+//        }
+//        Iterator iterator = orders.iterator();
+//        while (iterator.hasNext()) {
+//            Object element = iterator.next();
+//            if (order1.equals(element)) {
+//                iterator.remove();
+//            }
+//        }
+//
 //        orderRepository.saveAll(orders);
-
-        orderRepository.deleteById(id);
-        return "redirect:/adminCabinet";
+//        log.info("Delete order : " + id);
+//        orderRepository.deleteById(id);
+//        http://localhost:8080/adminCabinet/8/deleteOrderDataBase
+        return "adminOrder";
     }
 
 
 
     /////////////////////////////////// PRODUCT CONTROL /////////////////////////////////////////////////////
+    @GetMapping("/adminCabinet/adminProduct")
+    public String getAdminCabinetControlProduct(Model model){
+        model.addAttribute("products", productRepository.findAll());
+        return "adminProduct";
+    }
+
     @PostMapping("/adminCabinet/addProduct")
     public String addProductDB(@RequestParam String category,
                                @RequestParam String producer,
@@ -102,15 +133,21 @@ public class AdminCabinetController {
             product.setModel(model);
             product.setPrice(price);
             product.setDescription(description);
+            log.info("Add new product : " + product.getId());
             productRepository.save(product);
         }
         return "adminCabinet";
     }
 
-    @PostMapping("/adminCabinet/{id}/deletePrDataBase")
-    public String postAdminCabinetDeleteProduct(@PathVariable(value = "id") Long id, Model model){
+    @GetMapping("/adminCabinet/{id}/searchPrDataBase")
+    public String getAdminCabinetSearchProduct(@PathVariable(value = "id") Long id, Model model){
+        model.addAttribute("product", productRepository.findById(id).orElseThrow());
+        return "adminProductUpdate";
+    }
 
-        System.out.println(id);
+    @GetMapping("/adminCabinet/{id}/deletePrDataBase")
+    public String getAdminCabinetDeleteProduct(@PathVariable(value = "id") Long id){
+        log.info("Delete product : " + id);
         productRepository.deleteById(id);
 
         return "redirect:/adminCabinet";
@@ -130,7 +167,7 @@ public class AdminCabinetController {
         product.setModel(model);
         product.setPrice(price);
         product.setDescription(description);
-
+        log.info("Update product : " + product.getId());
         productRepository.save(product);
 
         return "redirect:/adminCabinet";
@@ -138,6 +175,13 @@ public class AdminCabinetController {
 
 
     /////////////////////////////////// USER CONTROL /////////////////////////////////////////////////////
+    @GetMapping("/adminCabinet/adminUser")
+    public String getAdminCabinetUpdateUser(Model model){
+        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("roles", Role.values());
+        return "adminUser";
+    }
+
     @PostMapping("/adminCabinet/{id}/updateUsDataBase")
     public String postAdminCabinetUpdateUser(@PathVariable(value = "id") Long id,
                                              @RequestParam String username,
@@ -145,7 +189,6 @@ public class AdminCabinetController {
 
         User byUsername = userRepository.findById(id).orElseThrow();
         byUsername.setUsername(username);
-        log.info("New role : " + role);
         if(role.equalsIgnoreCase("admin")){
             byUsername.getRoles().clear();
             byUsername.getRoles().add(Role.ADMIN);
@@ -153,8 +196,9 @@ public class AdminCabinetController {
         if(role.equalsIgnoreCase("user")){
             byUsername.getRoles().clear();
             byUsername.getRoles().add(Role.USER);        }
+        log.info("New role : " + role + " in person : " + byUsername.getId());
         userRepository.save(byUsername);
-        return "redirect:/adminCabinet";
+        return "adminUser";
 
     }
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Internet store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<header th:insert="block/header :: header"></header>
+
+<form action="/adminCabinet/adminUser">
+    <button type="submit">User Control</button>
+</form>
+
+<form action="/adminCabinet/adminOrder">
+    <button type="submit">Order Control</button>
+</form>
+
+<form action="/adminCabinet/adminProduct">
+    <button type="submit">Product Control</button>
+</form>
+<div>
+    <h4>Add product</h4>
+    <form action="/adminCabinet/addProduct" method="post">
+        <input type="text" name="category" placeholder="Product Category">
+        <input type="text" name="producer" placeholder="Product Producer">
+        <input type="text" name="model" placeholder="Product Model">
+        <input type="number" name="price" placeholder="Product Price">
+        <input type="text" name="description" placeholder="Product Description">
+        <button type="submit">Create Product</button>
+    </form>
+</div>
+
+
+    <div>
+        <div th:each="product : ${products}">
+            <p th:text="${product.getId()}"/>
+            <p th:text="${product.getProducer()}"/>
+            <p th:text="${product.getCategory()}"/>
+            <p th:text="${product.getModel()}"/>
+            <p th:text="${product.getPrice()}"/>
+            <p th:text="${product.getDescription()}"/>
+            <form th:action="'/adminCabinet/' + ${product.getId()} + '/searchPrDataBase'">
+                <button type="submit">Update product</button>
+            </form>
+            <form th:action="'/adminCabinet/' + ${product.getId()} + '/deletePrDataBase'">
+                <button type="submit">Delete product</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
